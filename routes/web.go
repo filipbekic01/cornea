@@ -1,13 +1,10 @@
 package routes
 
 import (
+	"github.com/filipbekic01/cornea/app/controllers"
 	"github.com/kataras/iris"
 )
 
 func Web(app *iris.Application) {
-	app.Get("/ping", func(ctx iris.Context) {
-		ctx.JSON(iris.Map{
-			"message": "pong",
-		})
-	})
+	app.Get("/", controllers.Welcome)
 }

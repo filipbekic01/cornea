@@ -1,7 +1,7 @@
 package main
 
-import "github.com/filipbekic01/cornea/bootstrap"
+import "github.com/filipbekic01/cornea/app"
 
 func main() {
-	bootstrap.App()
+	app.Run()
 }
