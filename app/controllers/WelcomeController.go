@@ -1,9 +1,9 @@
 package controllers
 
-import "github.com/kataras/iris"
+import "github.com/kataras/iris/v12"
 
+// Welcome description missing.
 func Welcome(ctx iris.Context) {
-	ctx.JSON(iris.Map{
-		"message": "Welcome to Cornea web framework.",
-	})
+	ctx.ViewData("message", "This is dynamic message")
+	ctx.View("welcome.html")
 }

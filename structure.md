@@ -11,6 +11,7 @@ cornea
 |   └── web.go
 ├── .env.example
 ├── .gitignore
+├── go.mod
 ├── structure.md
 ├── LICENCE
 └── main.go 
