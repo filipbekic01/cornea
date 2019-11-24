@@ -1,0 +1,39 @@
+{{define "default"}}
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Cornea</title>
+
+    <link rel="stylesheet" href="/css/app.css" />
+    <style>
+        body {
+            background: #f2f2f2;
+            color: #000030;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            height: 100%;
+        }
+
+        h1 {
+            margin: 250px auto 0 auto;
+            width: 500px;
+            font-size: 52px;
+            text-align: center;
+        }
+
+        img {
+            width: 100px;
+            margin: 20px auto 0 auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    {{block "content" .}}{{end}}
+</body>
+
+</html>
+{{end}}

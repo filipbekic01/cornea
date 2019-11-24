@@ -1,19 +1,51 @@
 package app
 
 import (
-	"github.com/filipbekic01/cornea/routes"
+	"log"
+
+	"github.com/filipbekic01/cornea/app/controllers"
+	"github.com/filipbekic01/cornea/app/middleware"
+	"github.com/joho/godotenv"
 	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/mvc"
 )
 
-// Run description is missing.
-func Run() {
-	app := iris.New()
+// Cornea .
+type Cornea struct {
+	Environment map[string]string
+	Iris        *iris.Application
+}
 
-	// Register routes
-	routes.Web(app)
+// Run .
+func Run() *Cornea {
+	cornea := new(Cornea)
 
-	// Register views
-	app.RegisterView(iris.HTML("./resources/views", ".html"))
+	// Iris
+	cornea.Iris = iris.New()
 
-	app.Run(iris.Addr(":8080"))
+	// Environment
+	env, err := godotenv.Read()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	cornea.Environment = env
+
+	// View
+	cornea.Iris.RegisterView(iris.HTML("./resources/views", ".html"))
+
+	// MVC
+	mvc.Configure(cornea.Iris.Party("/"), func(app *mvc.Application) {
+		app.Router.Use(middleware.GeneralMiddleware)
+
+		app.Register()
+
+		app.Handle(new(controllers.HomeController))
+	})
+
+	// Files
+	cornea.Iris.HandleDir("/", "./public")
+
+	cornea.Iris.Run(iris.Addr(":8080"))
+
+	return cornea
 }

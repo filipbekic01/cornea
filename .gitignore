@@ -11,5 +11,13 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Custom
+# Cornea
 cornea
+.env
+node_modules
+public/css
+public/js
+
+# Other
+mix-manifest.json
+package-lock.json
