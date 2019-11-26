@@ -1,12 +1,14 @@
 package app
 
 import (
+	"database/sql"
 	"log"
 
 	"github.com/filipbekic01/cornea/app/controllers"
 	"github.com/filipbekic01/cornea/app/middleware"
-	"github.com/filipbekic01/cornea/database"
-	"github.com/filipbekic01/cornea/database/migrations"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
@@ -20,19 +22,24 @@ type Cornea struct {
 	Iris        *iris.Application
 }
 
-// Run .
-func Run() *Cornea {
-	cornea := new(Cornea)
-
-	// Iris
-	cornea.Iris = iris.New()
-
-	// Environment
+func getEnv() map[string]string {
 	env, err := godotenv.Read()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	cornea.Environment = env
+
+	return env
+}
+
+// Run .
+func Run() *Cornea {
+	cornea := new(Cornea)
+
+	// Environment
+	cornea.Environment = getEnv()
+
+	// Iris
+	cornea.Iris = iris.New()
 
 	// Migrations
 	db, err := gorm.Open("postgres", "host=localhost port=5432 user=postgres dbname=cornea password=postgres1")
@@ -40,12 +47,6 @@ func Run() *Cornea {
 		panic("failed to connect database: " + err.Error())
 	}
 	defer db.Close()
-
-	kernel := &database.Kernel{DB: db}
-	createUserTable := migrations.CreateUsersTable{Kernel: kernel}
-	createUserTable.Up()
-
-	return nil
 
 	// View
 	cornea.Iris.RegisterView(iris.HTML("./resources/views", ".html"))
@@ -65,4 +66,27 @@ func Run() *Cornea {
 	cornea.Iris.Run(iris.Addr(":8080"))
 
 	return cornea
+}
+
+// Manage .
+func Manage(args []string) {
+
+	// Environment
+	env := getEnv()
+
+	if args[1] == "migrate" {
+		// Forward to CLI executable?
+		// ... or maybe use lib to handle migrations
+
+		db, err := sql.Open("postgres", "postgres://localhost:5432/database?sslmode=enable")
+		driver, err := postgres.WithInstance(db, &postgres.Config{})
+		m, err := migrate.NewWithDatabaseInstance(
+			"file:///migrations",
+			"postgres", driver)
+		m.Steps(2)
+
+		_ = err
+	}
+
+	_ = env
 }
