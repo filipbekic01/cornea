@@ -36,7 +36,12 @@ func Run() {
 	cornea.Iris = iris.New()
 
 	// View engine
-	cornea.Iris.RegisterView(iris.HTML("./public/views", ".html"))
+	var isDebug bool = false
+	if cornea.Environment["DEBUG"] == "TRUE" {
+		isDebug = true
+	}
+
+	cornea.Iris.RegisterView(iris.HTML("./public/views", ".html").Reload(isDebug))
 
 	// MVC configuration
 	mvc.Configure(cornea.Iris.Party("/"), func(app *mvc.Application) {
