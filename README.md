@@ -1,8 +1,6 @@
 # Cornea [work in progress]
 
-<img src="https://ya-webdesign.com/images250_/vector-eyeball-cornea-3.png"
-     alt="Cornea Go web framework"
-     style="float: left; margin-right: 10px; width:90px" />
+<img align="left" src="https://i.imgur.com/UizMzTS.png" />
 
 Cornea is Go web framework is based on most convinient and popular libraries such as [iris](https://github.com/kataras/iris), [gorm](https://github.com/jinzhu/gorm), [godotenv](https://github.com/joho/godotenv), [migrate](https://github.com/golang-migrate/migrate) and other. Goal is not to reinvent the wheel, but to help user take off with project as quickly as possible with a lot of basic and more advanced features out-of-box.
 
