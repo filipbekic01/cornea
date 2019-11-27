@@ -27,6 +27,12 @@ Download latest migrate library [release](https://github.com/golang-migrate/migr
 $ ./migrate -path database/migrations -database postgres://username:password@localhost:5432/dbname up
 ```
 
+Install npm modules using `npm` or `yarn` tool, then compile assets.
+```
+$ npm install
+$ npm run development
+```
+
 Run the application.
 
 ```
@@ -35,16 +41,17 @@ Now listening on: http://0.0.0.0:8080
 Application started. Press CTRL+C to shut down.
 ```
 
-
 ## Structure
 
-Application structure is intended to be simple and clean. 
+Application structure is intended to be simple, clean and intuitive.
 
-Root folder contains configuration files mostly. Folder *app* contains all data structures and methods. Once applicated is compiled, everything from this folder goes to one single binary file. Folder *assets* contains raw files which are compiled to public folder. Folder *database* contains database related files such as migrations. Folder *public* is the only one that goes on server together with main binary file.
+Root folder contains configuration files mostly. Folder `app` contains all data structures and methods. Everything from this folder compiles into single binary file. Folder `assets` contains raw files which are compiled and put in public folder. Folder `database` contains database related files such as migrations. Folder `public` is the only one that goes on server together with main binary file.
 
 File `app/kernel.go` is heart of application. It initializes web framework itself as well as other related things such as routing, dependency injection, template engine, static file serving, etc...
 
-File `go.mod` contains all dependencies
+File `.env.example` should be cloned to `.env` file. It contains all configuration variables.
+
+There is no explicit `routes` file since they are defined right in controllers - method names define them.
 
 ```
 ├── app
@@ -80,39 +87,44 @@ File `go.mod` contains all dependencies
 └── webpack.mix.js
 ``` 
 
+Once compiled, files you need for server are next.
+```
+├── public
+│   ├── js
+│   ├── css
+│   ├── views
+│   ...
+├── cornea
+└── .env
+``` 
+
 ## ORM
 
-Default library is [gorm](https://github.com/jinzhu/gorm). Every defined model in application should be located in `app/models` folder. Since there is no model mapper for now, you have to create models on your own. Quick preview:
+The library we decided to go with is [gorm](https://github.com/jinzhu/gorm) as they offer associations (has one, has many, belongs to, many to many, polymorphism), hooks, preloading, transactions, composite key, sql builder, logger, etc. However, we wanted to keep migrations and models away from each other. Even though there may be inconsistency in theory, this way you can keep track of every single migration. Library [gorm](https://github.com/jinzhu/gorm) does not provide as fluent as [migrate](https://github.com/golang-migrate/migrate) migrations.
+
+You decide weather your struct will extend `gorm.Model` or not. All it has are predefined attributes such as id, created, upated and deleted timestamps. We recommend using it since it gives you soft delete out of box.
+
+Quick preview of library usage:
 
 ```
-// Create
 db.Create(&User{Username: "John"})
 
-// Read
 var user User
 db.First(&user, 1)
 db.First(&user, "username = ?", "John")
 
-// Update
 db.Model(&product).Update("Username", "Philip")
 
-// Delete
 db.Delete(&product)
 ```
 
-For more detailed instructions, it would be perfect to visit their [official documentation](https://gorm.io/docs/). Make sure you skip *AutoMigrate* feature. Otherwise it may conflict with our *migrate* library.
+For more detailed instructions, it would be perfect to visit their [official documentation](https://gorm.io/docs/). Make sure you ignore `AutoMigrate` feature. Otherwise it may conflict with our *migrate* library.
 
 ## Migrations
 
-Even though Cornea uses [gorm](https://github.com/jinzhu/gorm) library which has out-of-box migrations that feature looked like incomplete and bit confusing - it's hard to keep track every single migration. Therefore, using [migrate](https://github.com/golang-migrate/migrate) library Cornea migrations are way more flexible and supports more database drivers. Great thing here is that mgirations are written in clean SQL code, in files with sql extension - the way it should be.
+Even though Cornea uses [gorm](https://github.com/jinzhu/gorm) library which has out of box migrations, that feature looked like incomplete and bit confusing - it's hard to keep track every single migration. Therefore, using [migrate](https://github.com/golang-migrate/migrate) library Cornea migrations are way more flexible and supports more database drivers. Great thing here is that migrations are written in clean sql code, in files with sql extension - the way as it should be.
 
-Download their latest [release](https://github.com/golang-migrate/migrate/releases) to Cornea root folder. This is how simple usage is:
-
-```
-./migrate -path database/migrations -database postgres://username:password@localhost:5432/dbname up
-```
-
-For more detailed instructions, open up their [official cli documentation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate).
+For more detailed instructions, please read their [official cli documentation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate).
 
 ## Assets
 
