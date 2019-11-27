@@ -46,7 +46,7 @@ func Run() *Cornea {
 	defer db.Close()
 
 	// View
-	cornea.Iris.RegisterView(iris.HTML("./resources/views", ".html"))
+	cornea.Iris.RegisterView(iris.HTML("./public/views", ".html"))
 
 	// MVC
 	mvc.Configure(cornea.Iris.Party("/"), func(app *mvc.Application) {
