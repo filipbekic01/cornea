@@ -56,13 +56,13 @@ There is no explicit `routes` file since they are defined right in controllers -
 ```
 ├── app
 │   ├── controllers
-│   │   └── HomeController.go
+│   │   └── home_controller.go
 │   ├── middleware
-│   │   └── GeneralMiddleware.go
+│   │   └── csrf_middleware.go
 │   ├── models
-│   │   └── User.go
+│   │   └── user.go
 │   ├── services
-│   │   └── UserService.go
+│   │   └── user_service.go
 │   └── kernel.go
 ├── assets
 │   ├── js
