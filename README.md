@@ -5,7 +5,7 @@ Cornea is Go web framework is based on most convinient and popular libraries suc
 ## Download
 Download and extract latest release [here](https://github.com/filipbekic01/cornea/releases). Once you get the source code, take a few extra steps to make sure you have everything working as intended.
 
-Application structure is ment to be simple and clean. Root folder contains configuration files mostly. Folder *app* contains all data structures and methods. Once software compiled, everything goes to one single binary file. Folder *assets* contains raw files which are compiled to public folder. Folder *database* contains database related files such as migrations. Folder *public* is the only one that goes on server together with main binary file.
+Application structure is ment to be simple and clean. Root folder contains configuration files mostly. Folder *app* contains all data structures and methods. Once applicated is compiled, everything from this folder goes to one single binary file. Folder *assets* contains raw files which are compiled to public folder. Folder *database* contains database related files such as migrations. Folder *public* is the only one that goes on server together with main binary file.
 
 ```
 ├── app
