@@ -6,7 +6,6 @@ import (
 	"github.com/filipbekic01/cornea/app/controllers"
 	"github.com/filipbekic01/cornea/app/middleware"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
 	"github.com/kataras/iris/v12"
@@ -29,26 +28,17 @@ func getEnv() map[string]string {
 }
 
 // Run .
-func Run() *Cornea {
+func Run() {
 	cornea := new(Cornea)
 
-	// Environment
+	// Load environment variables and initialize Iris framework
 	cornea.Environment = getEnv()
-
-	// Iris
 	cornea.Iris = iris.New()
 
-	// Migrations
-	db, err := gorm.Open("postgres", "host=localhost port=5432 user=postgres dbname=cornea password=postgres1")
-	if err != nil {
-		panic("failed to connect database: " + err.Error())
-	}
-	defer db.Close()
-
-	// View
+	// View engine
 	cornea.Iris.RegisterView(iris.HTML("./public/views", ".html"))
 
-	// MVC
+	// MVC configuration
 	mvc.Configure(cornea.Iris.Party("/"), func(app *mvc.Application) {
 		app.Router.Use(middleware.GeneralMiddleware)
 
@@ -57,10 +47,9 @@ func Run() *Cornea {
 		app.Handle(new(controllers.HomeController))
 	})
 
-	// Files
+	// Serve static files
 	cornea.Iris.HandleDir("/", "./public")
 
+	// Run iris
 	cornea.Iris.Run(iris.Addr(":8080"))
-
-	return cornea
 }
