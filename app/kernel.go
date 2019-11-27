@@ -1,13 +1,10 @@
 package app
 
 import (
-	"database/sql"
 	"log"
 
 	"github.com/filipbekic01/cornea/app/controllers"
 	"github.com/filipbekic01/cornea/app/middleware"
-	"github.com/golang-migrate/migrate/v4"
-	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -66,27 +63,4 @@ func Run() *Cornea {
 	cornea.Iris.Run(iris.Addr(":8080"))
 
 	return cornea
-}
-
-// Manage .
-func Manage(args []string) {
-
-	// Environment
-	env := getEnv()
-
-	if args[1] == "migrate" {
-		// Forward to CLI executable?
-		// ... or maybe use lib to handle migrations
-
-		db, err := sql.Open("postgres", "postgres://localhost:5432/database?sslmode=enable")
-		driver, err := postgres.WithInstance(db, &postgres.Config{})
-		m, err := migrate.NewWithDatabaseInstance(
-			"file:///migrations",
-			"postgres", driver)
-		m.Steps(2)
-
-		_ = err
-	}
-
-	_ = env
 }
