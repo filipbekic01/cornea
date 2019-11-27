@@ -2,7 +2,7 @@
 
 <img align="left" src="https://i.imgur.com/UizMzTS.png" />
 
-Cornea is Go web framework is based on most convinient and popular libraries such as [iris](https://github.com/kataras/iris), [gorm](https://github.com/jinzhu/gorm), [godotenv](https://github.com/joho/godotenv), [migrate](https://github.com/golang-migrate/migrate) and other. Goal is not to reinvent the wheel, but to help user take off with project as quickly as possible with a lot of basic and more advanced features out-of-box.
+Cornea is Go web framework based on most convinient and popular libraries such as [iris](https://github.com/kataras/iris), [gorm](https://github.com/jinzhu/gorm), [godotenv](https://github.com/joho/godotenv), [migrate](https://github.com/golang-migrate/migrate) and others. Goal is not to reinvent the wheel, but to help user take off with project as quickly as possible with a lot of basic and more advanced features out-of-box. Idea is to keep project community-driven. Therefore, please send all suggestions and feel free to make pull requests if you wish.
 
 <div style="clear:both"></div>
 
