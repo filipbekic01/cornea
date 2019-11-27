@@ -65,7 +65,7 @@ For more detailed instructions, it would be perfect to visit their [official doc
 
 ## Migrations
 
-Even though Cornea uses [gorm](https://github.com/jinzhu/gorm) library which has out-of-box migrations that feature looked like incomplete and bit confusing - it's hard to keep track every single migration. Therefore, using [migrate](https://github.com/golang-migrate/migrate) library Cornea migrations are way more flexible and supports more database drivers.
+Even though Cornea uses [gorm](https://github.com/jinzhu/gorm) library which has out-of-box migrations that feature looked like incomplete and bit confusing - it's hard to keep track every single migration. Therefore, using [migrate](https://github.com/golang-migrate/migrate) library Cornea migrations are way more flexible and supports more database drivers. Great thing here is that mgirations are written in clean SQL code, in files with sql extension - the way it should be.
 
 Download their latest [release](https://github.com/golang-migrate/migrate/releases) to Cornea root folder. This is how simple usage is:
 
