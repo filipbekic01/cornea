@@ -5,6 +5,8 @@ import (
 )
 
 // GeneralMiddleware .
-func GeneralMiddleware(ctx iris.Context) {
+func CSRFMiddleware(ctx iris.Context) {
+
+	// TODO: Implement CSRF token for MVC requests.
 	ctx.Next()
 }

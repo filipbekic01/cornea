@@ -5,6 +5,7 @@ import (
 
 	"github.com/filipbekic01/cornea/app/controllers"
 	"github.com/filipbekic01/cornea/app/middleware"
+	"github.com/filipbekic01/cornea/app/services"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
@@ -43,11 +44,13 @@ func Run() {
 
 	cornea.Iris.RegisterView(iris.HTML("./public/views", ".html").Reload(isDebug))
 
+	userService := services.NewUserService()
+
 	// MVC configuration
 	mvc.Configure(cornea.Iris.Party("/"), func(app *mvc.Application) {
 		app.Router.Use(middleware.GeneralMiddleware)
 
-		app.Register()
+		app.Register(userService)
 
 		app.Handle(new(controllers.HomeController))
 	})
@@ -56,5 +59,5 @@ func Run() {
 	cornea.Iris.HandleDir("/", "./public")
 
 	// Run iris
-	cornea.Iris.Run(iris.Addr(":8080"))
+	cornea.Iris.Run(iris.Addr(cornea.Environment["HOST"] + ":" + cornea.Environment["PORT"]))
 }
