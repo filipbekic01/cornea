@@ -1,9 +1,43 @@
-# Cornea [UNDERDEVELOPMENT]
+# Cornea [work in progress]
+
+<img src="https://ya-webdesign.com/images250_/vector-eyeball-cornea-3.png"
+     alt="Cornea Go web framework"
+     style="float: left; margin-right: 10px; width:90px" />
 
 Cornea is Go web framework is based on most convinient and popular libraries such as [iris](https://github.com/kataras/iris), [gorm](https://github.com/jinzhu/gorm), [godotenv](https://github.com/joho/godotenv), [migrate](https://github.com/golang-migrate/migrate) and other. Goal is not to reinvent the wheel, but to help user take off with project as quickly as possible with a lot of basic and more advanced features out-of-box.
 
-## Download
-Download and extract latest release [here](https://github.com/filipbekic01/cornea/releases). Once you get the source code, take a few extra steps to make sure you have everything working as intended.
+<div style="clear:both"></div>
+
+## Quick Start
+Download latest [release](https://github.com/filipbekic01/cornea/releases) or clone repository for nightly build:
+
+```
+$ git clone git@github.com:filipbekic01/cornea.git
+```
+
+Copy environemnt file, and set `DEBUG` to `TRUE` to avoid views and assets caching. 
+
+```
+$ copy .env.example .env
+$ vim .env
+```
+
+Download latest migrate library [release](https://github.com/golang-migrate/migrate/releases) as binary and put it in Cornea root folder. Now you can fire migrations with following line.
+
+```
+$ ./migrate -path database/migrations -database postgres://username:password@localhost:5432/dbname up
+```
+
+Run the application.
+
+```
+$ go run main.go
+Now listening on: http://0.0.0.0:8080
+Application started. Press CTRL+C to shut down.
+```
+
+
+## Structure
 
 Application structure is ment to be simple and clean. Root folder contains configuration files mostly. Folder *app* contains all data structures and methods. Once applicated is compiled, everything from this folder goes to one single binary file. Folder *assets* contains raw files which are compiled to public folder. Folder *database* contains database related files such as migrations. Folder *public* is the only one that goes on server together with main binary file.
 
@@ -40,6 +74,8 @@ Application structure is ment to be simple and clean. Root folder contains confi
 ├── README.md
 └── webpack.mix.js
 ``` 
+
+Once you download files, create `.env` to fit your needs. Make sure to set `DEBUG` to `TRUE` in order to disable views and assets caching on each page request.
 
 ## ORM
 

@@ -22,3 +22,4 @@ public/js
 mix-manifest.json
 package-lock.json
 migrate*
+go.sum
