@@ -3,6 +3,10 @@
 
 Cornea is Go web framework based on most convinient and popular libraries such as [iris](https://github.com/kataras/iris), [gorm](https://github.com/jinzhu/gorm), [godotenv](https://github.com/joho/godotenv), [migrate](https://github.com/golang-migrate/migrate) and others. Goal is not to reinvent the wheel, but to help user take off with project as quickly as possible with a lot of basic and more advanced features out-of-box. Idea is to keep project community-driven. Therefore, please send all suggestions and feel free to make pull requests if you wish.
 
+## Requirements
+
+The only requirement you need is latest [Go](https://golang.org/) binary and proper [workspace](https://golang.org/doc/code.html) setup. If you're Go newbie, make sure you understand how workspaces and modules work.
+
 ## Quick Start
 Download latest [release](https://github.com/filipbekic01/cornea/releases) or clone repository for nightly build:
 
@@ -34,7 +38,13 @@ Application started. Press CTRL+C to shut down.
 
 ## Structure
 
-Application structure is ment to be simple and clean. Root folder contains configuration files mostly. Folder *app* contains all data structures and methods. Once applicated is compiled, everything from this folder goes to one single binary file. Folder *assets* contains raw files which are compiled to public folder. Folder *database* contains database related files such as migrations. Folder *public* is the only one that goes on server together with main binary file.
+Application structure is intended to be simple and clean. 
+
+Root folder contains configuration files mostly. Folder *app* contains all data structures and methods. Once applicated is compiled, everything from this folder goes to one single binary file. Folder *assets* contains raw files which are compiled to public folder. Folder *database* contains database related files such as migrations. Folder *public* is the only one that goes on server together with main binary file.
+
+File `app/kernel.go` is heart of application. It initializes web framework itself as well as other related things such as routing, dependency injection, template engine, static file serving, etc...
+
+File `go.mod` contains all dependencies
 
 ```
 ├── app
@@ -70,11 +80,9 @@ Application structure is ment to be simple and clean. Root folder contains confi
 └── webpack.mix.js
 ``` 
 
-Once you download files, create `.env` to fit your needs. Make sure to set `DEBUG` to `TRUE` in order to disable views and assets caching on each page request.
-
 ## ORM
 
-Default library is [gorm](https://github.com/jinzhu/gorm). Every defined model in application should be located in *app/models* folder. Since there is no model mapper for now, you have to create models on your own. Quick preview:
+Default library is [gorm](https://github.com/jinzhu/gorm). Every defined model in application should be located in `app/models` folder. Since there is no model mapper for now, you have to create models on your own. Quick preview:
 
 ```
 // Create
